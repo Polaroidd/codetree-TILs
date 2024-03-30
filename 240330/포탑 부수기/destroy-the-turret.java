@@ -58,10 +58,9 @@ public class Main {
             if(prevdir[0]==def.r&&prevdir[1]==def.c){
                 canonmap[prevdir[0]][prevdir[1]].power-=fordif;
                 attacked[prevdir[0]][prevdir[1]]=true;
-
-
                 while(prev.containsKey(prevdir)){
                     prevdir = prev.get(prevdir);
+                    
                     if(prevdir[0]==att.r && prevdir[1]==att.c){
                         break;
                     }
@@ -69,6 +68,7 @@ public class Main {
                     canonmap[prevdir[0]][prevdir[1]].power-=(fordif/2);
 
                 }
+
                 return true;
             }
             for(int[] temp:laserdir){
@@ -131,18 +131,19 @@ public class Main {
                 }
             }
         }
+
         canonlst.sort(null);
         
         while(true){
             if(canonlst.size()==0){
                 break;
             }
-
             Canon c = canonlst.get(0);
             if(c.power!=0){
                 break;
             }
             cracked[c.r][c.c] = true;
+            canonlst.remove(0);
         }
     }
     public static void main(String[] args) {
