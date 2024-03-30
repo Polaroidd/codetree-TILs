@@ -115,7 +115,7 @@ public class Main {
         Canon attacker = canonlst.get(0);
         Canon defencer = canonlst.get(canonlst.size()-1);
         attacker.power+=(N+M);
-
+        System.out.println(attacker.r+" "+attacker.c);
         attacked = new boolean[N][M];
         visited = new boolean[N][M];
 
