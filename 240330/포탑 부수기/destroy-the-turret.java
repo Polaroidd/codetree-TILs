@@ -65,6 +65,7 @@ public class Main {
                     if(prevdir[0]==att.r && prevdir[1]==att.c){
                         break;
                     }
+                    attacked[prevdir[0]][prevdir[1]]=true;
                     canonmap[prevdir[0]][prevdir[1]].power-=(fordif/2);
 
                 }
