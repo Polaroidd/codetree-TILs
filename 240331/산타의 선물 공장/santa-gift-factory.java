@@ -123,6 +123,7 @@ public class Main {
             return;
         }
         if(movebelt(b_num)){
+            isBroken[b_num] = true;
             System.out.println(b_num+1);
 
         }else{
