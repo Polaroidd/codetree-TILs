@@ -78,21 +78,25 @@ public class Main {
         int res = 0;
         w_max = scan.nextInt();
         for(int i=0;i<M;i++){
-            if(!belts[i].isEmpty()&&!isBroken[i]){
-                while(isRemoved[belts[i].peek().id]){
-                    belts[i].poll();
-                }
-                if(belts[i].isEmpty()){
-                    continue;
-                }
-                present p = belts[i].poll();
-                if(p.w<=w_max){
-                    res+=p.w;
-                    isRemoved[p.id] = true;
-                }else{
-                    belts[i].add(p);
-                }
+            if(belts[i].isEmpty()||isBroken[i]){
+                continue;
             }
+            while(!belts[i].isEmpty()&&isRemoved[belts[i].peek().id]){
+                belts[i].poll();
+            }
+            if(belts[i].isEmpty()){
+                continue;
+            }
+
+            present p = belts[i].poll();
+
+            if(p.w<=w_max){
+                res+=p.w;
+                isRemoved[p.id] = true;
+            }else{
+                belts[i].add(p);
+            }
+            
         }
         System.out.println(res);
 
@@ -113,6 +117,13 @@ public class Main {
             System.out.println(-1);
             return;
         }
+        int idx = beltnum[idmap.get(f_id)];
+
+
+        while(belts[idx].peek().id!=idmap.get(f_id)){
+            belts[idx].add(belts[idx].poll());
+        }
+        
         System.out.println(beltnum[idmap.get(f_id)]+1);
 
     }
