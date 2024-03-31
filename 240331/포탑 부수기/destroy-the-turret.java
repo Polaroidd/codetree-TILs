@@ -140,6 +140,7 @@ public class Main {
 
                     }else{
                         if(canonmap[i][j].power<=0){
+                            canonmap[i][j].power = 0;
                             cracked[i][j] = true;
                         }
                     }
@@ -185,12 +186,13 @@ public class Main {
 
             }
         }
-        canonlst.sort(null);
         
         for(int k=0;k<K;k++){
-            if(canonlst.size()==1){
+            canonlst.sort(null);
+            if(canonlst.size()<=1){
                 break;
             }
+            
             Attack();
        
         }
@@ -207,7 +209,13 @@ public class Main {
         //     }
         //     System.out.println();
         // }
+        if(canonlst.size()==0){
+        System.out.println(0);
+
+        }else{
         System.out.println(canonlst.get(canonlst.size()-1).power);
+
+        }
         // 여기에 코드를 작성해주세요.
     }
 }
