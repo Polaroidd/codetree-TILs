@@ -40,7 +40,7 @@ public class Main {
     static int N,M,K;
     static Canon[][] canonmap;
     static int[][] bombdir = {{-1,-1},{-1,0},{-1,1},{0,1},{1,1},{1,0},{1,-1},{0,-1}};
-    static int[][] laserdir = {{-1,0},{1,0},{0,-1},{0,1}};
+    static int[][] laserdir = {{0,1},{-1,0},{0,-1},{1,0}};
     static boolean[][] attacked;
     static boolean[][] visited;
     static int timestamp;
