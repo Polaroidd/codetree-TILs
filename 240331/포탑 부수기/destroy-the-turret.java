@@ -49,7 +49,6 @@ public class Main {
         visited[att.r][att.c] = true;
         Queue<int[]> que = new LinkedList<>();
         HashMap<int[],int[]> prev = new HashMap<>();
-        timestamp = 0;
         int fordif = att.power;
         int[] prevdir = {att.r,att.c};
         que.add(prevdir);
@@ -92,6 +91,7 @@ public class Main {
     public static void bombattack(Canon att,Canon def){
 
         def.power-=att.power;
+
         int r = def.r;
         int c = def.c;
 
@@ -122,6 +122,9 @@ public class Main {
         attacked = new boolean[N][M];
         visited = new boolean[N][M];
         attacked[attacker.r][attacker.c] = true;
+        // System.out.println("attacker : "+attacker.r+" "+attacker.c);
+        // System.out.println("defencer : "+defencer.r+" "+defencer.c);
+
         if(!laserattack(attacker,defencer)){//laser attack
             bombattack(attacker,defencer);   
         }
@@ -129,8 +132,15 @@ public class Main {
 
         for(int i=0;i<N;i++){
             for(int j=0;j<M;j++){
-                if(!attacked[i][j]&&!cracked[i][j]){
+                if(!cracked[i][j]){
+                    if(!attacked[i][j]){
                     canonmap[i][j].power+=1;
+
+                    }else{
+                        if(canonmap[i][j].power<=0){
+                            cracked[i][j] = true;
+                        }
+                    }
                     
                 }
             }
@@ -143,7 +153,7 @@ public class Main {
                 break;
             }
             Canon c = canonlst.get(0);
-            if(c.power!=0){
+            if(c.power>0){
                 break;
             }
             cracked[c.r][c.c] = true;
@@ -157,6 +167,7 @@ public class Main {
         canonlst = new ArrayList<>();
         cracked = new boolean[N][M];
         canonmap = new Canon[N][M];
+        timestamp = 0;
 
         for(int i=0;i<N;i++){
             for(int j=0;j<M;j++){
@@ -176,10 +187,9 @@ public class Main {
         
         for(int k=0;k<K;k++){
             Attack();
-        }
         // for(int i=0;i<N;i++){
         //     for(int j=0;j<M;j++){
-        //         if(canonmap[i][j]==null){
+        //         if(cracked[i][j]){
         //         System.out.print(0+" ");
         //         continue;
                     
@@ -189,6 +199,7 @@ public class Main {
         //     }
         //     System.out.println();
         // }
+        }
 
         System.out.println(canonlst.get(canonlst.size()-1).power);
         // 여기에 코드를 작성해주세요.
