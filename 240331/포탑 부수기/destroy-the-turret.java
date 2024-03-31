@@ -40,7 +40,7 @@ public class Main {
     static int N,M,K;
     static Canon[][] canonmap;
     static int[][] bombdir = {{-1,-1},{-1,0},{-1,1},{0,1},{1,1},{1,0},{1,-1},{0,-1}};
-    static int[][] laserdir = {{0,1},{-1,0},{0,-1},{1,0}};
+    static int[][] laserdir = {{0,1},{1,0},{0,-1},{-1,0}};
     static boolean[][] attacked;
     static boolean[][] visited;
     static int timestamp;
@@ -56,7 +56,7 @@ public class Main {
             prevdir = que.poll();
             visited[prevdir[0]][prevdir[1]] = true;
             if(prevdir[0]==def.r&&prevdir[1]==def.c){
-                canonmap[prevdir[0]][prevdir[1]].power-=fordif;
+                def.power-=fordif;
                 attacked[prevdir[0]][prevdir[1]]=true;
                 while(prev.containsKey(prevdir)){
                     prevdir = prev.get(prevdir);
@@ -115,8 +115,6 @@ public class Main {
 
     public static void Attack(){
         timestamp++;
-
-
         Canon attacker = canonlst.get(0);
         attacker.timestamp = timestamp;
         Canon defencer = canonlst.get(canonlst.size()-1);
