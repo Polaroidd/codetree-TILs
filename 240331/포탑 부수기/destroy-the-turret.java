@@ -187,6 +187,9 @@ public class Main {
         canonlst.sort(null);
         
         for(int k=0;k<K;k++){
+            if(canonlst.size()==1){
+                break;
+            }
             Attack();
         // for(int i=0;i<N;i++){
         //     for(int j=0;j<M;j++){
