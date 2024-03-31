@@ -149,7 +149,7 @@ public class Main {
             if(blt == b_num){
                 return false;
             }
-            blt = (blt+1)%NUM;
+            blt = (blt+1)%M;
         }
         while(!belts[b_num].isEmpty()){
             present p = belts[b_num].poll();
