@@ -78,6 +78,7 @@ public class Main {
                 if(visited[x][y]||cracked[x][y]){
                     continue;
                 }
+                
                 prev.put(nextdir,prevdir);
                 que.add(nextdir);
 
@@ -191,6 +192,9 @@ public class Main {
                 break;
             }
             Attack();
+       
+        }
+        // System.out.println(timestamp);
         // for(int i=0;i<N;i++){
         //     for(int j=0;j<M;j++){
         //         if(cracked[i][j]){
@@ -203,8 +207,6 @@ public class Main {
         //     }
         //     System.out.println();
         // }
-        }
-
         System.out.println(canonlst.get(canonlst.size()-1).power);
         // 여기에 코드를 작성해주세요.
     }
