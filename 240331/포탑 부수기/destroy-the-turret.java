@@ -54,6 +54,7 @@ public class Main {
         que.add(prevdir);
         while(!que.isEmpty()){
             prevdir = que.poll();
+            visited[prevdir[0]][prevdir[1]] = true;
             if(prevdir[0]==def.r&&prevdir[1]==def.c){
                 canonmap[prevdir[0]][prevdir[1]].power-=fordif;
                 attacked[prevdir[0]][prevdir[1]]=true;
