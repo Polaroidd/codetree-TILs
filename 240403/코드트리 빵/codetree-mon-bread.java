@@ -30,8 +30,8 @@ public class Main {
     static boolean[][] wallmap;
     static Scanner scan = new Scanner(System.in);
     static HashSet<Node> hs;
-    static PriorityQueue<Node>[] pqlst;
     static Node[] storelst;
+    static boolean[][] storemap;
     static boolean[] arrived;//시간 넘치면 set으로 사용자 넣어놓고 한명씩 빼도 돼
     static Queue<Node>[] quelst;
 
@@ -43,17 +43,14 @@ public class Main {
         hs = new HashSet<>();
         storelst = new Node[M];
         quelst = new LinkedList[M];
-        
+        storemap = new boolean[N][N];
         wallmap = new boolean[N][N];
-        pqlst = new PriorityQueue[M];
         arrived = new boolean[M];
-        for(int i=0;i<M;i++){
-            pqlst[i] = new PriorityQueue<>();
-        }
+        
         for(int i=0;i<N;i++){
             for(int j=0;j<N;j++){
                 if(scan.nextInt()==1){
-                    hs.add(new Node(i,j,0));
+                    storemap[i][j] = true;
                 }
             }
         }
@@ -61,10 +58,6 @@ public class Main {
             int r = scan.nextInt()-1;
             int c = scan.nextInt()-1;
             storelst[i] = new Node(r,c,0);
-            for(Node nde:hs){
-                pqlst[i].add(new Node(nde.r,nde.c,Math.abs(r-nde.r)+Math.abs(c-nde.c)));
-            }
-            // System.out.println(pqlst[i].peek().r+" "+pqlst[i].peek().c);
         }
 
         int time=0;
@@ -131,17 +124,37 @@ public class Main {
         }
     }
     static void basecamp(int time){
-        // System.out.println("basecamp : "+time);
-        while(wallmap[pqlst[time].peek().r][pqlst[time].peek().c]){//이미 basecamp에 사람이 들어간 상태 제거
 
-            pqlst[time].poll();
-        }
-        Node nde = pqlst[time].poll();
-        wallmap[nde.r][nde.c] = true;
+        Node nde = storelst[time];
+        Node res = bfs(nde,time);
+        // System.out.println("bfs done");
+        wallmap[res.r][res.c] = true;
         quelst[time] = new LinkedList<>();
-        quelst[time].add(new Node(nde.r,nde.c,time));
+        quelst[time].add(new Node(res.r,res.c,time));
         // System.out.println(nde.r+" "+nde.c);
 
+    }
+    static Node bfs(Node nde, int idx){
+        // System.out.println("bfs : "+nde.r+" "+nde.c);
+        Queue<Node> que = new LinkedList<>();
+        que.add(nde);
+        while(!que.isEmpty()){
+            Node n = que.poll();
+            for(int[] temp:dir){
+                int r = temp[0]+n.r;
+                int c = temp[1]+n.c;
+                if(r<0||r>=N||c<0||c>=N||wallmap[r][c]){
+                    continue;
+                }
+                if(storemap[r][c]){
+                    storemap[r][c] = false;
+                    return new Node(r,c,idx);
+                }
+                que.add(new Node(r,c,0));
+
+            }
+        }
+        return new Node(-1,-1,-1);
 
     }
 }
