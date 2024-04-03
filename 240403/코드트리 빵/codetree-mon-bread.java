@@ -34,8 +34,7 @@ public class Main {
     static boolean[][] storemap;
     static boolean[] arrived;//시간 넘치면 set으로 사용자 넣어놓고 한명씩 빼도 돼
     static Queue<Node>[] quelst;
-
-
+    static boolean[][][] visitedlst;
 
     public static void main(String[] args) {
         N = scan.nextInt();
@@ -46,7 +45,7 @@ public class Main {
         storemap = new boolean[N][N];
         wallmap = new boolean[N][N];
         arrived = new boolean[M];
-        
+        visitedlst = new boolean[M][N][N];
         for(int i=0;i<N;i++){
             for(int j=0;j<N;j++){
                 if(scan.nextInt()==1){
@@ -64,14 +63,19 @@ public class Main {
 
         while(true){
             move(time); //quelst iteration 이미 도착 - continue, que 비었어 - break;
-
+            // System.out.println("move done");
+        
             if(arrived(time)){
                 System.out.println(time+1);
                 break;
             }//도착확인 - wallmap 최신화
+            // System.out.println("arrive done");
+        
             if(time<M){
                 basecamp(time);
             }
+            // System.out.println("basecamp done");
+        
 
             time++;
 
@@ -79,15 +83,20 @@ public class Main {
     }
     static void move(int time){
         // System.out.println("move : "+time);
+    
         for(int i=0;i<time;i++){
             if(i>=M){
                 break;
             }
-            if(!arrived[i]){
+            if(!arrived[i]&&!quelst[i].isEmpty()){
                 int n = quelst[i].peek().t;
                 loop:
-                while(n==quelst[i].peek().t){
+                while(!quelst[i].isEmpty()&&n==quelst[i].peek().t){
                     Node nde = quelst[i].poll();
+                    if(visitedlst[i][nde.r][nde.c]){
+                        continue;
+                    }
+                    visitedlst[i][nde.r][nde.c] = true;
                     for(int[] temp:dir){
                         int rr = temp[0]+nde.r;
                         int cc = temp[1]+nde.c;
@@ -102,11 +111,16 @@ public class Main {
                         
                     }
                 }
+                
             }
+            // if(quelst[i].isEmpty()){
+            //         System.out.println("que empty"+i+" "+time);
+            //     }
         }
     }
     static boolean arrived(int time){
         // System.out.println("arrived : "+time);
+        
         int res = 0;
         for(int i=0;i<M;i++){
             if(arrived[i]){
@@ -117,6 +131,8 @@ public class Main {
             }
         }
         // System.out.println();
+        // System.out.println(time);
+        
         if(res == 0){
             return true;
         }else{
@@ -124,31 +140,61 @@ public class Main {
         }
     }
     static void basecamp(int time){
-
+        
         Node nde = storelst[time];
         Node res = bfs(nde,time);
-        // System.out.println("bfs done");
+        // System.out.println("bfs done"+time);
         wallmap[res.r][res.c] = true;
         quelst[time] = new LinkedList<>();
         quelst[time].add(new Node(res.r,res.c,time));
+        
         // System.out.println(nde.r+" "+nde.c);
 
     }
     static Node bfs(Node nde, int idx){
+        boolean[][] visited = new boolean[N][N];
+
+        // if(idx == 26){
         // System.out.println("bfs : "+nde.r+" "+nde.c);
+        //     for(int i=0;i<N;i++){
+        //         for (int j=0;j<N;j++){
+        //             if(wallmap[i][j]){
+        //                 System.out.print(1);
+
+        //             }else{
+        //                 System.out.print(0);
+        //             }
+        //             System.out.print(" ");
+        //         }
+        //         System.out.println();
+        //     }
+        // }
         Queue<Node> que = new LinkedList<>();
         que.add(nde);
         while(!que.isEmpty()){
+            
             Node n = que.poll();
+            if(visited[n.r][n.c]){
+                continue;
+            }
+            visited[n.r][n.c] = true;
+            
+            // if(idx == 26){
+            //     System.out.println(n.r+" "+n.c);
+            // }
             for(int[] temp:dir){
                 int r = temp[0]+n.r;
                 int c = temp[1]+n.c;
-                if(r<0||r>=N||c<0||c>=N||wallmap[r][c]){
+                if(r<0||r>=N||c<0||c>=N||visited[r][c]){
                     continue;
                 }
                 if(storemap[r][c]){
                     storemap[r][c] = false;
+                    wallmap[r][c] = true;
                     return new Node(r,c,idx);
+                }
+                if(wallmap[r][c]){
+                    continue;
                 }
                 que.add(new Node(r,c,0));
 
