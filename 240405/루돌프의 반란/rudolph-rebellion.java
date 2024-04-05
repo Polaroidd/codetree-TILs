@@ -218,11 +218,16 @@ public class Main {
     }
     public static void pushed(Santa s,int r,int c,int r2,int c2){ //밀기
         // System.out.println("pushed : "+s.idx+" "+s.r+" "+s.c+" "+r+" "+c);
+        if(r==s.r&&c==s.c){
+            stopped[s.idx] = time;
+            return;
+        }
+
         if(r<0||r>=N||c<0||c>=N){
                 removeSanta(s);
                 return;
         }
-        if(santamap[r][c]>0&&r!=s.r&&c!=s.c){
+        if(santamap[r][c]>0){
             pushed(santalst[santamap[r][c]],r+r2,c+c2,r2,c2);
         }
         santamap[s.r][s.c] = 0;
