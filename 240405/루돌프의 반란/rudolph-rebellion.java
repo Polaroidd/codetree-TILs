@@ -222,7 +222,7 @@ public class Main {
                 removeSanta(s);
                 return;
         }
-        if(santamap[r][c]>0){
+        if(santamap[r][c]>0&&r!=s.r&&c!=s.c){
             pushed(santalst[santamap[r][c]],r+r2,c+c2,r2,c2);
         }
         santamap[s.r][s.c] = 0;
@@ -232,6 +232,7 @@ public class Main {
         s.d = getdistance(r,c,dolfr,dolfc);
     }
     public static void removeSanta(Santa s){
+        // System.out.println("rmsanta");
         removed[s.idx] = true;
         santamap[s.r][s.c] = 0;
         arrlst.remove(s);
