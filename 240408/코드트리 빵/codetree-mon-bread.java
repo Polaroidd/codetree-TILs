@@ -143,9 +143,10 @@ public class Main {
     }
     static Node bfs(Node nde, int idx){
         boolean[][] visited = new boolean[N][N];
-
-
+        boolean flag = false;
+        PriorityQueue<Node> pq = new PriorityQueue<>();
         Queue<Node> que = new LinkedList<>();
+        nde.t = 0;
         que.add(nde);
         while(!que.isEmpty()){
             
@@ -165,16 +166,23 @@ public class Main {
                     continue;
                 }
                 if(basemap[r][c]){
-                    basemap[r][c] = false;
-                    wallmap[r][c] = true;
-                    return new Node(r,c,idx);
+                	flag = true;
+                    pq.add(new Node(r,c,n.t+1));
                 }
-                
-                que.add(new Node(r,c,0));
+                if(!flag) {
+                    que.add(new Node(r,c,n.t+1));
+                	
+                }
 
             }
         }
-        return new Node(-1,-1,-1);
+        Node ndee = pq.poll();
+        int r = ndee.r;
+        int c = ndee.c;
+        basemap[r][c] = false;
+        wallmap[r][c] = true;
+        return new Node(r,c,idx);
+        
 
     }
     static Node bfs2(Node nde, int idx){
