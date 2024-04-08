@@ -12,9 +12,10 @@ class Node implements Comparable<Node>{
 
     @Override
     public int compareTo(Node other){
-        if(this.t!=other.t){
-            return this.t-other.t;
-        }else if(this.r!=other.r){
+//        if(this.t!=other.t){
+//            return this.t-other.t;
+//        }else 
+        if(this.r!=other.r){
             return this.r-other.r;
 
         }else{
@@ -109,19 +110,19 @@ public class Main {
         }
     }
     static boolean arrived(int time){
-        //  System.out.println("arrived : "+time);
+//         System.out.println("arrived : "+time);
         
         int res = 0;
         for(int i=0;i<M;i++){
             if(arrived[i]){
-                //  System.out.print(i);
+//                 System.out.print(i);
                 wallmap[storelst[i].r][storelst[i].c] = true;
             }else{
                 res++;
             }
         }
-        //  System.out.println();
-        //  System.out.println(res);
+//         System.out.println();
+//         System.out.println(res);
         
         if(res == 0){
             return true;
@@ -143,8 +144,9 @@ public class Main {
     }
     static Node bfs(Node nde, int idx){
         boolean[][] visited = new boolean[N][N];
-
-
+        Node minnode = new Node(Integer.MAX_VALUE,Integer.MAX_VALUE,0);
+        boolean flag = false;
+        PriorityQueue<Node> pq = new PriorityQueue<>();
         Queue<Node> que = new LinkedList<>();
         que.add(nde);
         while(!que.isEmpty()){
@@ -165,18 +167,22 @@ public class Main {
                     continue;
                 }
                 if(basemap[r][c]){
-                    basemap[r][c] = false;
-                    wallmap[r][c] = true;
-                    return new Node(r,c,idx);
+                	
+                    flag = true;
+                    pq.add(new Node(r,c,0));
                 }
                 if(wallmap[r][c]){
                     continue;
                 }
-                que.add(new Node(r,c,0));
+                if(!flag) {
+                    que.add(new Node(r,c,0));
+                	
+                }
 
             }
+            
         }
-        return new Node(-1,-1,-1);
+        return pq.peek();
 
     }
     static Node bfs2(Node nde, int idx){
@@ -207,6 +213,8 @@ public class Main {
                 	while(now_node.parnode!=nde) {
                 		now_node = now_node.parnode;
                 	}
+//                	System.out.println(nde.r + " "+nde.c+ " "+now_node.r+" "+now_node.c);
+                    
                 	return new Node(now_node.r,now_node.c,0);
                 }
                 que.add(now_node);
