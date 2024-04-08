@@ -145,6 +145,7 @@ public class Main {
     static Node bfs(Node nde, int idx){
         boolean[][] visited = new boolean[N][N];
         Node minnode = new Node(Integer.MAX_VALUE,Integer.MAX_VALUE,0);
+        int time = Integer.MAX_VALUE;
         boolean flag = false;
         PriorityQueue<Node> pq = new PriorityQueue<>();
         Queue<Node> que = new LinkedList<>();
@@ -167,20 +168,25 @@ public class Main {
                     continue;
                 }
                 if(basemap[r][c]){
-                	
+					if(!flag) {
+						time = n.t;
+					}
                     flag = true;
-                    pq.add(new Node(r,c,0));
+                    pq.add(new Node(r,c,n.t));
                 }
                 if(wallmap[r][c]){
                     continue;
                 }
                 if(!flag) {
-                    que.add(new Node(r,c,0));
+                    que.add(new Node(r,c,n.t+1));
                 	
                 }
 
             }
             
+        }
+        while(pq.peek().t>time) {
+        	pq.poll();
         }
         return pq.peek();
 
