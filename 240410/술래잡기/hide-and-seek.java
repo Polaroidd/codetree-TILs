@@ -23,8 +23,9 @@ class Thief{
 
 public class Main {
 	static int[][] dir = {{-1,0},{0,1},{1,0},{0,-1}};
+	static int[][] dirrev = {{1,0},{0,1},{-1,0},{0,-1}};
 	static boolean taggerreversed = false;
-	static Dir[][] taggerdirmap;
+	static Dir[][] taggerdirmap,taggerdirmaprev;
 	static Thief[] thieflst;
 	static boolean[][] treemap;
 	static HashSet<Integer>[][] thiefmap;
@@ -82,6 +83,7 @@ public class Main {
 		treemap = new boolean[N][N];
 		thiefmap = new HashSet[N][N];
 		taggerdirmap = new Dir[N][N];
+		taggerdirmaprev = new Dir[N][N];
 		//thiefmap init
 		for(int i=0;i<N;i++) {
 			for(int j=0;j<N;j++) {
@@ -125,22 +127,56 @@ public class Main {
 				d = (d+1)%4;
 			}
 		}
+		
+		r = 0;
+		c = 0;
+		d = 0;
+		
+		while(true) {
+			if(r==N/2&&c==N/2) {
+				break;
+			}
+			int rr = r+dirrev[d][0];
+			int cc = c+dirrev[d][1];
+			if(rr<0||rr>=N||cc<0||cc>=N||taggerdirmaprev[rr][cc]!=null) {
+				d = (d+1)%4;
+			}
+			taggerdirmaprev[r][c] = new Dir(dirrev[d][0],dirrev[d][1]);
+			r +=dirrev[d][0];
+			c+=dirrev[d][1];
+			
+			
+			
+		}
+		
 		//print taggerdirmap
-//		for(int i=0;i<N;i++) {
-//			for(int j=0;j<N;j++) {
-//				if(taggerdirmap[i][j]==null) {
-//					System.out.print("(-,-) ");
-//					continue;
-//				}
-//				System.out.print("("+taggerdirmap[i][j].r+","+taggerdirmap[i][j].c+") ");
-//				
-//			}
-//			System.out.println();
-//		}
-//		System.out.println();
-//		
-//		printthiefmap();
-//		printtreemap();
+		// for(int i=0;i<N;i++) {
+		// 	for(int j=0;j<N;j++) {
+		// 		if(taggerdirmaprev[i][j]==null) {
+		// 			System.out.print("(-,-) ");
+		// 			continue;
+		// 		}
+		// 		System.out.print("("+taggerdirmaprev[i][j].r+","+taggerdirmaprev[i][j].c+") ");
+				
+		// 	}
+		// 	System.out.println();
+		// }
+		// System.out.println();
+		// for(int i=0;i<N;i++) {
+		// 	for(int j=0;j<N;j++) {
+		// 		if(taggerdirmap[i][j]==null) {
+		// 			System.out.print("(-,-) ");
+		// 			continue;
+		// 		}
+		// 		System.out.print("("+taggerdirmap[i][j].r+","+taggerdirmap[i][j].c+") ");
+				
+		// 	}
+		// 	System.out.println();
+		// }
+		// System.out.println();
+		
+		// printthiefmap();
+		// printtreemap();
 		
 		
 		
@@ -148,41 +184,59 @@ public class Main {
 		for(round=1;round<=K;round++) {
 			movethief();
 			movetagger();
-//			System.out.println("Round : "+round);
-//			printthiefmap();
+			// System.out.println("Round : "+round);
+			// printthiefmap();
 		}
 		System.out.println(result);
 		
 
 	}
 	private static void movetagger() {
-		int rd = taggerdirmap[tagr][tagc].r;
-		int cd = taggerdirmap[tagr][tagc].c;
-		
+		int rd = 0;
+		int cd = 0;
 		if(taggerreversed) {
-			rd*=-1;
-			cd*=-1;
+			rd = taggerdirmaprev[tagr][tagc].r;
+			cd = taggerdirmaprev[tagr][tagc].c;
+			
+		}else {
+			rd = taggerdirmap[tagr][tagc].r;
+			cd = taggerdirmap[tagr][tagc].c;
+			
 		}
+		
+		
+//		System.out.println(tagr+" "+tagc);
 		tagr+=rd;
 		tagc+=cd;
 		
+		if((tagr==0&&tagc==0)||(tagr==N/2&&tagc==N/2)) {
+			taggerreversed = !taggerreversed;
+		}
 		int seerd = taggerdirmap[tagr][tagc].r;
 		int seecd = taggerdirmap[tagr][tagc].c;
+		if(taggerreversed) {
+			seerd = taggerdirmaprev[tagr][tagc].r;
+			seecd = taggerdirmaprev[tagr][tagc].c;
+			
+		}
 		
 		for(int i=0;i<3;i++) {
 			int sawr = tagr+seerd*i;
 			int sawc = tagc+seecd*i;
-			if(sawr<0||sawr>=N||sawc<0||sawc>=N) continue;
+			if(sawr<0||sawr>=N||sawc<0||sawc>=N) break;
+//			if(i==0&&treemap[sawr][sawc]) break;
+			
 			if(thiefmap[sawr][sawc].isEmpty()||treemap[sawr][sawc]) continue;
+			
+			// System.out.println(sawr+" "+sawc);
 			result+=round*thiefmap[sawr][sawc].size();
+			
 			for(int k:thiefmap[sawr][sawc]) {
 				caught[k] = true;
-				thiefmap[sawr][sawc].remove(k);
 			}
+			thiefmap[sawr][sawc] = new HashSet<>();
 		}
-		if((tagr==0&&tagc==0)||(tagr==N/2&&tagc==N/2)) {
-			taggerreversed = !taggerreversed;
-		}
+		
 		
 		
 		
@@ -194,6 +248,7 @@ public class Main {
 			int r = th.r+th.rd;
 			int c = th.c+th.cd;
 			if(r<0||r>=N||c<0||c>=N) {
+				//방향변경
 				th.rd *=-1;
 				th.cd*=-1;
 				r = th.r+th.rd;
