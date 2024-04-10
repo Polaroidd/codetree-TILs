@@ -38,6 +38,7 @@ public class Main {
 	public static void printthiefmap() {
 		System.out.println("printthiefmap");
 		System.out.println("tagger location : "+tagr+" "+tagc);
+		System.out.println("Result : "+result);
 		for(int i=0;i<N;i++) {
 			for(int j=0;j<N;j++) {
 				if(thiefmap[i][j].isEmpty()) {
@@ -150,42 +151,42 @@ public class Main {
 		}
 		
 		//print taggerdirmap
-		// for(int i=0;i<N;i++) {
-		// 	for(int j=0;j<N;j++) {
-		// 		if(taggerdirmaprev[i][j]==null) {
-		// 			System.out.print("(-,-) ");
-		// 			continue;
-		// 		}
-		// 		System.out.print("("+taggerdirmaprev[i][j].r+","+taggerdirmaprev[i][j].c+") ");
-				
-		// 	}
-		// 	System.out.println();
-		// }
-		// System.out.println();
-		// for(int i=0;i<N;i++) {
-		// 	for(int j=0;j<N;j++) {
-		// 		if(taggerdirmap[i][j]==null) {
-		// 			System.out.print("(-,-) ");
-		// 			continue;
-		// 		}
-		// 		System.out.print("("+taggerdirmap[i][j].r+","+taggerdirmap[i][j].c+") ");
-				
-		// 	}
-		// 	System.out.println();
-		// }
-		// System.out.println();
-		
-		// printthiefmap();
-		// printtreemap();
-		
+//		for(int i=0;i<N;i++) {
+//			for(int j=0;j<N;j++) {
+//				if(taggerdirmaprev[i][j]==null) {
+//					System.out.print("(-,-) ");
+//					continue;
+//				}
+//				System.out.print("("+taggerdirmaprev[i][j].r+","+taggerdirmaprev[i][j].c+") ");
+//				
+//			}
+//			System.out.println();
+//		}
+//		System.out.println();
+//		for(int i=0;i<N;i++) {
+//			for(int j=0;j<N;j++) {
+//				if(taggerdirmap[i][j]==null) {
+//					System.out.print("(-,-) ");
+//					continue;
+//				}
+//				System.out.print("("+taggerdirmap[i][j].r+","+taggerdirmap[i][j].c+") ");
+//				
+//			}
+//			System.out.println();
+//		}
+//		System.out.println();
+//		
+//		printthiefmap();
+//		printtreemap();
+//		
 		
 		
 		//round start
 		for(round=1;round<=K;round++) {
 			movethief();
 			movetagger();
-			// System.out.println("Round : "+round);
-			// printthiefmap();
+//			System.out.println("Round : "+round);
+//			printthiefmap();
 		}
 		System.out.println(result);
 		
@@ -228,10 +229,11 @@ public class Main {
 			
 			if(thiefmap[sawr][sawc].isEmpty()||treemap[sawr][sawc]) continue;
 			
-			// System.out.println(sawr+" "+sawc);
+//			System.out.println(sawr+" "+sawc);
 			result+=round*thiefmap[sawr][sawc].size();
 			
 			for(int k:thiefmap[sawr][sawc]) {
+//				System.out.println(k);
 				caught[k] = true;
 			}
 			thiefmap[sawr][sawc] = new HashSet<>();
@@ -244,6 +246,7 @@ public class Main {
 	private static void movethief() {
 		for(int i=1;i<=M;i++) {
 			if(caught[i]) continue;
+			if(getdis(thieflst[i])>3) continue;
 			Thief th = thieflst[i];
 			int r = th.r+th.rd;
 			int c = th.c+th.cd;
@@ -265,6 +268,11 @@ public class Main {
 //		printthiefmap();
 		
 		
+	}
+	private static int getdis(Thief th) {
+		// TODO Auto-generated method stub
+		
+		return Math.abs(th.r-tagr)+Math.abs(th.c-tagc);
 	}
 
 }
