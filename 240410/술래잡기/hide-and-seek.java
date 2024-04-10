@@ -172,6 +172,7 @@ public class Main {
 		for(int i=0;i<3;i++) {
 			int sawr = tagr+seerd*i;
 			int sawc = tagc+seecd*i;
+			if(sawr<0||sawr>=N||sawc<0||sawc>=N) continue;
 			if(thiefmap[sawr][sawc].isEmpty()||treemap[sawr][sawc]) continue;
 			result+=round*thiefmap[sawr][sawc].size();
 			for(int k:thiefmap[sawr][sawc]) {
