@@ -97,26 +97,37 @@ public class Main {
 		int i=1;
 		loop:
 		for(i=1;i<N+1;i++) {
-			for(int j=i;j>=0;j--) {
-//				System.out.println(r+" "+c);
-				r = exitr-j;
-				c = exitc-i;
-				if(contains(r,c,r+i,c+i)) {
-//					System.out.println("contains : "+r+" "+c);
-					break loop;
-					
+			for(r=exitr-i;r<=exitr;r++) {
+				for(c=exitc-i;c<=exitc;c++) {
+					if(contains(r,c,r+i,c+i)) {
+//						System.out.println("contains : "+r+" "+c);
+						break loop;
+						
+					}
 				}
 			}
-			for(int j=i;j>=0;j--) {
-//				System.out.println(r+" "+c);
-				r = exitr-j;
-				c = exitc;
-				if(contains(r,c,r+i,c+i)) {
-//					System.out.println("contains : "+r+" "+c);
-					break loop;
-					
-				}
-			}
+			
+			
+//			for(int j=i;j>=0;j--) {
+////				System.out.println(r+" "+c);
+//				r = exitr-j;
+//				c = exitc-i;
+//				if(contains(r,c,r+i,c+i)) {
+////					System.out.println("contains : "+r+" "+c);
+//					break loop;
+//					
+//				}
+//			}
+//			for(int j=i;j>=0;j--) {
+////				System.out.println(r+" "+c);
+//				r = exitr-j;
+//				c = exitc;
+//				if(contains(r,c,r+i,c+i)) {
+////					System.out.println("contains : "+r+" "+c);
+//					break loop;
+//					
+//				}
+//			}
 			
 		}
 		int minr = r;
@@ -125,6 +136,7 @@ public class Main {
 		
 		
 		int num = maxidx+1;
+//		printplayermap();
 //		System.out.println("minrc : "+minr+" "+minc+" "+" "+maxidx);
 		
 		int[][] tempwall = new int[num][num];
