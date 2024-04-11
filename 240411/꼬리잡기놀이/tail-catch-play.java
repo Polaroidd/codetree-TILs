@@ -177,6 +177,7 @@ public class Main {
 	}
 
 	private static void movepeople() {
+		loop:
 		for(int i=1;i<M+1;i++) {
 			People people = null;
 			if(reversedlst[i]) {
@@ -189,11 +190,21 @@ public class Main {
 			}
 			int r = people.r;
 			int c = people.c;
+			int tailr = 0;
+			int tailc = 0;
+			boolean mettail = false;
 			for(int[] dir:dirs) {
 				int nextr = r+dir[0];
 				int nextc = c+dir[1];
 				if(notinroad(nextr,nextc)) continue;
+				if(peoplemap[nextr][nextc]!=null&&peoplemap[nextr][nextc].isend) {
+					mettail = true;
+					tailr = nextr;
+					tailc = nextc;
+					continue;
+				}
 				if(peoplemap[nextr][nextc]!=null) continue;
+				
 				people.r = nextr;
 				people.c = nextc;
 				peoplemap[r][c] = null;
@@ -206,9 +217,34 @@ public class Main {
 					move(people.right,reversedlst[i],r,c);
 					
 				}
+				continue loop;
+				
+
 				
 				
 			}
+			
+			if(mettail) {
+				int nextr = tailr;
+				int nextc = tailc;
+				people.r = nextr;
+				people.c = nextc;
+				peoplemap[r][c] = null;
+				peoplemap[nextr][nextc] = people;
+				if(reversedlst[i]) {
+					move(people.left,reversedlst[i],r,c);
+					
+					
+				}else {
+					move(people.right,reversedlst[i],r,c);
+					
+				}
+				if(peoplemap[nextr][nextc]==null) {
+				peoplemap[nextr][nextc] = people;
+			}
+			}
+			
+			
 			
 		}
 	}
@@ -255,7 +291,18 @@ public class Main {
 					System.out.print("- ");
 					
 				}else {
-					System.out.print(peoplemap[i][j].team+" ");
+					if(peoplemap[i][j].isend) {
+						if(headlst[peoplemap[i][j].team]==peoplemap[i][j]) {
+
+							System.out.print("-1 ");
+						}else {
+							System.out.print("-2 ");
+							
+						}
+					}else {
+						System.out.print(peoplemap[i][j].team+" ");
+						
+					}
 				}
 				
 			}
@@ -279,6 +326,7 @@ public class Main {
 				peoplemap[nextr][nextc] = people;
 				fillmap(people);
 			}else if(peopleidxmap[nextr][nextc]==3) {
+				if(peopleidxmap[r][c]==1) continue;
 
 				People people = new People(nextr,nextc,teamidx,true);
 				p.right = people;
