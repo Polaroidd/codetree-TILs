@@ -100,8 +100,8 @@ public class Main {
 //		for(Canons c:canonlst) {
 //			System.out.println(c.attack+" "+c.r+" "+c.c+" "+c.timestamp);
 //		}
-		// printcrackedmap();
-		// printcanonmap();
+//		printcrackedmap();
+//		printcanonmap();
 		
 		for(int i=1;i<=K;i++) {
 			if(canonlst.size()<=1) {
@@ -130,9 +130,9 @@ public class Main {
 			
 			canonlst.sort(null);
 			
-			// System.out.println("Round : "+i);
-			// printcrackedmap();
-			// printcanonmap();
+//			System.out.println("Round : "+i);
+//			printcrackedmap();
+//			printcanonmap();
 			
 		}
 		System.out.println(canonlst.get(canonlst.size()-1).attack);
@@ -152,6 +152,7 @@ public class Main {
 			target.attack-=power;
 		}else {
 			target.attack = 0;
+			canonlst.remove(target);
 			cracked[target.r][target.c]=true;
 		}
 		for(int[] dir:bombdir) {
@@ -222,6 +223,7 @@ public class Main {
 				}else {
 					canon.attack = 0;
 					cracked[canon.r][canon.c]=true;
+					
 					canonmap[canon.r][canon.c] = null;
 					canonlst.remove(canon);
 				}
