@@ -107,7 +107,7 @@ public class Main {
 			if(canonlst.size()<=1) {
 				break;
 			}
-			boolean[][] attacked = new boolean[N][N];
+			boolean[][] attacked = new boolean[N][M];
 			
 			Canons attacker = canonlst.get(0);
 			Canons target = canonlst.get(canonlst.size()-1);
@@ -157,7 +157,7 @@ public class Main {
 		}
 		for(int[] dir:bombdir) {
 			int nr = (target.r+dir[0]+N)%N;
-			int nc = (target.c+dir[1]+N)%N;
+			int nc = (target.c+dir[1]+M)%M;
 			if(cracked[nr][nc]||(nr==attacker.r&&nc==attacker.c)) continue;
 			
 			
@@ -181,7 +181,7 @@ public class Main {
 		int power = attacker.attack;
 		Queue<Dir> que = new LinkedList<>();
 		que.add(new Dir(r,c));
-		boolean[][] visited = new boolean[N][N];
+		boolean[][] visited = new boolean[N][M];
 		HashMap<Dir,Dir> hm = new HashMap<>();
 		boolean res = false;
 		Dir nextd=null;
@@ -194,7 +194,7 @@ public class Main {
 			
 			for(int[] dir:laserdir) {
 				int nextr = (d.r+dir[0]+N)%N;
-				int nextc = (d.c+dir[1]+N)%N;
+				int nextc = (d.c+dir[1]+M)%M;
 				if(cracked[nextr][nextc]||visited[nextr][nextc]) continue;
 				nextd = new Dir(nextr,nextc);
 				que.add(nextd);
