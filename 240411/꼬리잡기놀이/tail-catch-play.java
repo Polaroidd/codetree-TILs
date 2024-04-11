@@ -90,7 +90,8 @@ public class Main {
 			int temp = round%(4*N);
 			int a = temp/N; //0,1,2,3
 			int b = temp%N; //0 ~ round-1
-			
+//			System.out.println(temp);
+//			System.out.println("ball : "+a+" "+b);
 			throwball(a,b);
 //			printpeoplemap();
 //			printroadmap();
@@ -120,7 +121,7 @@ public class Main {
 			break;
 		case 2:
 			for(int i=N-1;i>=0;i--) {
-				if(ball(b,i)) {
+				if(ball(N-b-1,i)) {
 					return;
 				};
 			}
@@ -128,7 +129,7 @@ public class Main {
 			break;
 		case 3:
 			for(int i=0;i<N;i++) {
-				if(ball(i,b)) {
+				if(ball(i,N-b-1)) {
 					return;
 				};
 			}
@@ -240,8 +241,8 @@ public class Main {
 					
 				}
 				if(peoplemap[nextr][nextc]==null) {
-				peoplemap[nextr][nextc] = people;
-			}
+					peoplemap[nextr][nextc] = people;
+				}
 			}
 			
 			
