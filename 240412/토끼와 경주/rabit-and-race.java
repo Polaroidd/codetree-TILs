@@ -1,6 +1,28 @@
 import java.util.*;
 
+class Pair implements Comparable<Pair>{
+	int r,c;
 
+	public Pair(int r, int c) {
+		this.r = r;
+		this.c = c;
+	}
+
+	@Override
+	public int compareTo(Pair other) {
+		int d = this.r+this.c;
+		int od =other.r+other.c;
+		if(d!=od) {
+			return od-d;
+		}else if(this.r!=other.r) {
+			return other.r-this.r;
+		}else {
+			return other.c-this.c;
+		}
+	}
+	
+	
+}
 class Rabbit implements Comparable<Rabbit>{
 	int pid,d,r,c;
 	int num=0;
@@ -39,6 +61,7 @@ public class Main {
 		
 		for(int i=0;i<Q;i++) {
 			int com = scan.nextInt();
+//			System.out.println(com);
 			switch(com) {
 			case 100:
 				init();
@@ -87,6 +110,7 @@ public class Main {
 		int K = scan.nextInt();
 		int S = scan.nextInt();
 		for(int i=0;i<K;i++) {
+//			System.out.println(i);
 			Rabbit rab = null;
 			for(int idx=0;idx<2001;idx++) {
 				if(!pqlst[idx].isEmpty()) {
@@ -97,39 +121,22 @@ public class Main {
 			rab.num+=1;
 			int resx = -1;
 			int resy = -1;
+			PriorityQueue<Pair> pairpq = new PriorityQueue<>();
+//			System.out.println(rab.r+" "+rab.c+" "+rab.d);
 			for(int[] temp:dir) {
 				int r = rab.r;
 				int c = rab.c;
 				int x = temp[0];
 				int y = temp[1];
-				for(int j=0;j<rab.d;j++) {//시간 줄이기 가능
-					if(r+x<0||c+y<0||r+x>=N||c+y>=M) {
-						x*=-1;
-						y*=-1;
-					}
-					r+=x;
-					c+=y;
-					
-				}
 				
-				if(r+c==resx+resy) {
-					if(r>resx) {
-						resx= r;
-						resy =c;
-						
-					}else if(r==resx) {
-						if(c>resy) {
-							resx= r;
-							resy =c;
-							
-						}
-					}
-				}else if(r+c>resx+resy){
-					resx= r;
-					resy =c;
-					
-				}
+				int tmpr = r+rab.d*x;
+				int tmpc = c+rab.d*y;
+				
+				pairpq.add(getdis(tmpr,tmpc));
+				
 			}
+			resx = pairpq.peek().r;
+			resy = pairpq.peek().c;
 //			System.out.println(resx+" "+resy);
 			rab.r =resx;
 			rab.c = resy;
@@ -148,6 +155,43 @@ public class Main {
 		
 		// TODO Auto-generated method stub
 		
+	}
+	private static Pair getdis(int tmpr, int tmpc) {
+//		System.out.println("getdis : "+tmpr+" "+tmpc);
+		if(tmpr<0) {
+//			tmpr+=1;
+			tmpr*=-1;
+		}
+		if(tmpc<0) {
+//			tmpc+=1;
+			tmpc*=-1;
+		}
+		
+		int resr = 0;
+		int resc = 0;
+		int ar = (tmpr-1)/(N-1);
+		int br = (tmpr-1)%(N-1);
+		if(ar==0) {
+			resr = tmpr;
+		}else if(ar%2==0) {
+			resr = br+1;
+		}else {
+			resr = (N-2)-br;
+			
+		}
+		int ac = (tmpc-1)/(M-1);
+		int bc = (tmpc-1)%(M-1);
+		if(ac==0) {
+			resc = tmpc;
+		}else if(ac%2==0) {
+			resc = bc+1;
+		}else {
+			resc = (M-2)-bc;
+			
+		}
+		// TODO Auto-generated method stub
+//		System.out.println("getdis : "+resr+" "+resc);
+		return new Pair(resr,resc);
 	}
 	private static void distchange() {
 		int pid = scan.nextInt();
