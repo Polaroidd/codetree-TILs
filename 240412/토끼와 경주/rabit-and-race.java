@@ -47,8 +47,9 @@ class Rabbit implements Comparable<Rabbit>{
 
 
 public class Main {
-	static int Q,N,M,P,SUM;
-	static int[] scorelst;
+	static int Q,N,M,P;
+	static long SUM;
+	static long[] scorelst;
 	static Scanner scan = new Scanner(System.in);
 	static HashMap<Integer,Integer> idmap;
 	static PriorityQueue<Rabbit>[] pqlst;
@@ -91,7 +92,7 @@ public class Main {
 			pqlst[i] = new PriorityQueue<>();
 		}
 		idmap = new HashMap<>();
-		scorelst = new int[P];
+		scorelst = new long[P];
 		SUM=0;
 		
 		for(int i=0;i<P;i++) {
@@ -202,12 +203,13 @@ public class Main {
 	}
 	private static void select() {
 		
-		int res = SUM;
+		long res = SUM;
+//		System.out.println("SUM : "+SUM);
 		int max = Integer.MIN_VALUE;
 		for(int i=0;i<scorelst.length;i++) {
 			if(scorelst[i]>max) {
 //				System.out.println(scorelst[i]);
-				max = scorelst[i];
+				max = (int) scorelst[i];
 			}
 		}
 		System.out.println(res+max);
