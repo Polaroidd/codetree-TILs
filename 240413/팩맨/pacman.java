@@ -157,9 +157,9 @@ public class Main {
 			for(int di:trid.dir) {
 				nextr+=dir[di][0];
 				nextc+=dir[di][1];
-				if(nextr<0||nextr>=4||nextc<0||nextc>=4||visited[nextr][nextc]) continue loop;
+				if(nextr<0||nextr>=4||nextc<0||nextc>=4) continue loop;
 //				System.out.print(di+" ");
-				num+=monmap[nextr][nextc].size();
+				if(!visited[nextr][nextc]) num+=monmap[nextr][nextc].size();
 				visited[nextr][nextc] = true;
 			}
 //			System.out.println("result : "+trid.toString()+" "+nextr+" "+nextc+" "+num);
