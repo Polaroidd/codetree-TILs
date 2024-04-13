@@ -270,11 +270,11 @@ public class Main {
 	}
 
 
-	private static void divide() {
+	private static void divide() {//400
 		// TODO Auto-generated method stub
 		int from = scan.nextInt();
 		int to = scan.nextInt();
-		if(numlst[from]<=0) return;
+		if(numlst[from]<=1) return;
 		
 		int fordiv = numlst[from]/2;
 		
@@ -296,6 +296,7 @@ public class Main {
 			headlst[to] = head;
 			head.belt = to;
 			taillst[to] = mid;
+			mid.back = mid;
 		}else {
 			headlst[to].front = mid;
 			mid.back = headlst[to];
@@ -320,7 +321,7 @@ public class Main {
 	}
 
 
-	private static void getinfo() {
+	private static void getinfo() {//500
 //		printstate();
 		// TODO Auto-generated method stub
 		int pnum = scan.nextInt();
@@ -344,7 +345,7 @@ public class Main {
 	}
 
 
-	private static void getbeltinfo() {
+	private static void getbeltinfo() {//600
 		// TODO Auto-generated method stub
 		int bnum = scan.nextInt();
 		
