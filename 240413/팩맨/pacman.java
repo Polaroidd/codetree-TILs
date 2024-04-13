@@ -117,16 +117,12 @@ public class Main {
 //		printdeadmap();
 		
 		for(t=1;t<=T;t++) {
+//			System.out.println("Round : "+t);
 			replicationandmove();	
-			
-//			printmonmap();	
-//			monmove();
-			
+//			printmonmap();
 			pacmove();
-//			monremove();
 //			printmonmap();
 			eggcomplete();
-//			System.out.println("Round : "+t);
 //			printmonmap();
 //			printdeadmap();
 			
@@ -210,6 +206,7 @@ public class Main {
 				//기존맵삭제
 				monmap[m.r][m.c].remove(m);
 				//위치업데이트
+				m.dir = d;
 				m.r = nextr;
 				m.c = nextc;
 //				System.out.println(nextr+" "+nextc);
