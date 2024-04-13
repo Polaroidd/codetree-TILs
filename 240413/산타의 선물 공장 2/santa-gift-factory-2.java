@@ -275,7 +275,10 @@ public class Main {
 		// TODO Auto-generated method stub
 		int from = scan.nextInt();
 		int to = scan.nextInt();
-		if(numlst[from]<=1) return;
+		if(numlst[from]<=1) {
+			System.out.println(numlst[to]);
+			return;
+		}
 		
 		int fordiv = numlst[from]/2;
 		
