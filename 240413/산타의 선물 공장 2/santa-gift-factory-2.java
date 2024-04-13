@@ -25,8 +25,8 @@ public class Main {
 		for(int i=1;i<=Q;i++) {//Q까지 가야해
 			
 			int code = scan.nextInt();
-
-			// System.out.println("Round : "+i+" "+code);
+			
+//			System.out.println("Round : "+i+" "+code);
 			switch(code) {
 			case 100:
 				init();
@@ -48,6 +48,7 @@ public class Main {
 				break;
 				
 			}
+//			System.out.println("idx : "+presentlst[2].back.idx);
 //			printstate();
 		}
 		
@@ -76,7 +77,7 @@ public class Main {
 		System.out.println();
 	}
 
-	private static void init() {
+	private static void init() {//100
 		N = scan.nextInt();
 		M = scan.nextInt();
 		presentlst = new Present[M+1];
@@ -113,7 +114,7 @@ public class Main {
 	}
 
 
-	private static void movestocks() {
+	private static void movestocks() {//200
 		int from = scan.nextInt();
 		int to = scan.nextInt();
 		if(headlst[from]==null) {
@@ -157,7 +158,7 @@ public class Main {
 	}
 
 
-	private static void changehead() {
+	private static void changehead() {//300
 		int belta = scan.nextInt();
 		int beltb = scan.nextInt();
 		int resbelt = beltb;
@@ -190,6 +191,9 @@ public class Main {
 				
 				//head를 나로 바꿔줘
 			}
+			
+			headlst[beltb].front = headlst[beltb];
+			headlst[beltb].back = headlst[beltb];
 			
 		}else {
 			if(numlst[beltb]==1) {
@@ -317,9 +321,11 @@ public class Main {
 
 
 	private static void getinfo() {
+//		printstate();
 		// TODO Auto-generated method stub
 		int pnum = scan.nextInt();
 		Present p = presentlst[pnum];
+//		System.out.println(p.idx);
 		int res = 0;
 		
 		if(p.front!=p) {
