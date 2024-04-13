@@ -26,7 +26,7 @@ public class Main {
 			
 			int code = scan.nextInt();
 			
-			System.out.println("Round : "+i+" "+code);
+			// System.out.println("Round : "+i+" "+code);
 			switch(code) {
 			case 100:
 				init();
