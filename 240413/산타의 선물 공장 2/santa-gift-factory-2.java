@@ -118,6 +118,7 @@ public class Main {
 		int from = scan.nextInt();
 		int to = scan.nextInt();
 		if(headlst[from]==null) {
+			System.out.println(numlst[to]);
 			return;
 		}
 		if(headlst[to]==null) {//가려는곳이 비었어
