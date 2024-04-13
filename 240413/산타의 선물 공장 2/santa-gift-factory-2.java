@@ -26,7 +26,7 @@ public class Main {
 			
 			int code = scan.nextInt();
 
-//			System.out.println("Round : "+i+" "+code);
+			System.out.println("Round : "+i+" "+code);
 			switch(code) {
 			case 100:
 				init();
@@ -161,7 +161,10 @@ public class Main {
 		int belta = scan.nextInt();
 		int beltb = scan.nextInt();
 		int resbelt = beltb;
-		if(headlst[belta]==null&&headlst[beltb]==null) return;
+		if(headlst[belta]==null&&headlst[beltb]==null) {
+			System.out.println(numlst[beltb]);
+			return;
+		}
 		
 		//무조건 개수 큰게 belta
 		if(numlst[belta]<numlst[beltb]) {
