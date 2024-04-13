@@ -22,11 +22,11 @@ public class Main {
 	public static void main(String[] args) {
 		Q = scan.nextInt();
 		
-		for(int i=1;i<=40;i++) {//Q까지 가야해
+		for(int i=1;i<=Q;i++) {//Q까지 가야해
 			
 			int code = scan.nextInt();
 			
-			// System.out.println("Round : "+i+" "+code);
+//			System.out.println("Round : "+i+" "+code);
 			switch(code) {
 			case 100:
 				init();
